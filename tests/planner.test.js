@@ -32,3 +32,17 @@ test("sanitizePlan rejects junk and trims oversize values", () => {
   assert.equal(p.budget[0].amount, 0);
   assert.equal(p.timeline[0].weeksBefore, 104);
 });
+
+test("validate rejects out-of-range guests and tiny budgets", () => {
+  assert.ok(validate({ type: "wedding", guests: 5001, budget: 50000 }).length > 0);
+  assert.ok(validate({ type: "wedding", guests: 10, budget: 999 }).length > 0);
+});
+test("fallbackPlan uses default ideas for an unknown vibe", () => {
+  const p = fallbackPlan({ type: "wedding", guests: 10, budget: 5000, vibe: "???" });
+  assert.ok(p.ideas.length > 0);
+});
+test("sanitizePlan limits tasks per milestone and leaves date empty without one", () => {
+  const p = sanitizePlan({ budget: [{ category: "a" }], timeline: [{ weeksBefore: 2, title: "t", tasks: ["1", "2", "3", "4", "5", "6"] }], vendors: [{ name: "v" }] }, {});
+  assert.equal(p.timeline[0].tasks.length, 4);
+  assert.equal(p.timeline[0].date, "");
+});

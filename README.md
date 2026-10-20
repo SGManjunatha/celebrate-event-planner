@@ -2,7 +2,7 @@
 A planning assistant for weddings, birthdays and community events. Enter your event details and get a budget, timeline, vendor checklist and personalised ideas.
 
 ## Gen AI services
-- **Google Gemini API (`gemini-3.6-flash(with fallbacks)`)** generates the whole plan as structured JSON (budget, timeline, vendors, ideas). It is called from a Cloudflare Worker (`worker/worker.js`) so the API key never reaches the browser.
+- **Google Gemini API (`gemini-3.6-flash (with fallbacks)`)** generates the whole plan as structured JSON (budget, timeline, vendors, ideas). It is called from a Cloudflare Worker (`worker/worker.js`) so the API key never reaches the browser.
 - If the AI is unreachable, the app falls back to built-in templates (`planner.js`).
 
 ## Architecture
@@ -17,3 +17,8 @@ A planning assistant for weddings, birthdays and community events. Enter your ev
 1. Push this repo to GitHub and enable **Settings → Pages → Deploy from branch (main, root)**.
 2. Deploy the proxy: `cd worker && npx wrangler deploy`, then `npx wrangler secret put GEMINI_API_KEY`. Set `ALLOWED_ORIGIN` in `wrangler.toml` to your Pages origin.
 3. Put the Worker URL in `config.js` as `PROXY_URL` and push.
+
+## Quality checks
+- `npm test` – unit tests for planning logic, AI client (success, fallback, cache, timeout), storage helpers and the Worker (CORS, validation, retries, model fallback).
+- `npm run coverage` – the same tests with a coverage report.
+- `npm run lint` – ESLint (run `npm install` first). CI runs lint and tests on every push.

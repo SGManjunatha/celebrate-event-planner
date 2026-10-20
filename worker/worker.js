@@ -1,3 +1,4 @@
+// @ts-check
 // Cloudflare Worker: keeps the Gemini API key server-side and validates all input.
 const TYPES = ["wedding", "birthday", "community"], VIBES = ["Traditional", "Modern", "Rustic", "Playful", "Elegant"];
 const MODELS = ["gemini-3.6-flash", "gemini-3.1-flash-lite", "gemini-flash-latest"];
@@ -24,7 +25,7 @@ export default {
         if (r.ok) { text = (await r.json())?.candidates?.[0]?.content?.parts?.[0]?.text || "{}"; break; }
         last = `${model} ${r.status}: ${(await r.text()).slice(0, 300)}`;
         if (r.status !== 503 && r.status !== 429) break;
-        await new Promise((res) => setTimeout(res, 800));
+        await new Promise((res) => setTimeout(res, Number(env.RETRY_MS ?? 800)));
       }
       if (text !== null) break;
     }
