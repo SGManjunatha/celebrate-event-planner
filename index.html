@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; connect-src 'self' https://*.workers.dev; style-src 'self'; script-src 'self'; base-uri 'none'; form-action 'none'">
+<title>Celebrate – AI Event Planner</title>
+<meta name="description" content="GenAI planning assistant for weddings, birthdays and community events.">
+<link rel="stylesheet" href="styles.css"></head>
+<body><a class="skip" href="#out">Skip to plan</a>
+<main class="w"><h1>🎉 Celebrate</h1>
+<p>Describe your event and get an AI-generated budget, timeline, vendor checklist and ideas.</p>
+<form id="form" class="card" novalidate><div class="g">
+<div><label for="type">Event type</label><select id="type" name="type"><option value="wedding">Wedding</option><option value="birthday">Birthday</option><option value="community">Community event</option></select></div>
+<div><label for="name">Event name</label><input id="name" name="name" maxlength="80" autocomplete="off"></div>
+<div><label for="date">Date</label><input id="date" name="date" type="date"></div>
+<div><label for="guests">Guests</label><input id="guests" name="guests" type="number" min="1" max="5000" value="100" required></div>
+<div><label for="budget">Total budget (₹)</label><input id="budget" name="budget" type="number" min="1000" value="500000" required></div>
+<div><label for="city">City</label><input id="city" name="city" maxlength="60"></div>
+<div><label for="vibe">Vibe</label><select id="vibe" name="vibe"><option>Traditional</option><option>Modern</option><option>Rustic</option><option>Playful</option><option>Elegant</option></select></div>
+<div><label for="notes">Special notes</label><input id="notes" name="notes" maxlength="200" placeholder="vegetarian, outdoor, kids…"></div>
+</div><p id="err" class="err" role="alert"></p>
+<button id="go" type="submit">Plan my event ✨</button> <button id="print" type="button">Print plan</button>
+<p id="status" class="mu" role="status" aria-live="polite"></p></form>
+<div id="out" hidden tabindex="-1"></div></main>
+<script type="module" src="app.js"></script></body></html>
